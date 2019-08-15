@@ -1,0 +1,2 @@
+mqtt:
+  serverUris: tcp://mosquitto:1883

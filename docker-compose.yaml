@@ -1,0 +1,21 @@
+version: '3.5'
+services:
+
+  mosquitto:
+    image: eclipse-mosquitto
+    container_name: mosquitto
+    ports:
+      - "1883:1883"
+      - "9001:9001"
+
+  server:
+    image: server
+    container_name: server
+    environment:
+      SPRING_PROFILES_ACTIVE: "docker"
+      WAIT_HOSTS: "mosquitto:1883"
+      WAIT_HOSTS_TIMEOUT: "120"
+    ports:
+      - "8080:8080"
+    depends_on:
+      - mosquitto
