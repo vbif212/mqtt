@@ -16,9 +16,7 @@ public class ServerTopics {
 
     public static String SERVER_CLIENT_ID_KICK_TOPIC = SERVER_CLIENT_ID_TOPIC + "/kick";
 
-    public static String SERVER_CLIENT_ID_BYE_TOPIC = SERVER_CLIENT_ID_TOPIC + "/bye";
-
-    public static String SERVER_CLIENT_ID_JOIN_TOPIC = SERVER_CLIENT_ID_TOPIC + "/join";
+    public static String SERVER_CLIENT_ID_ERROR_TOPIC = SERVER_CLIENT_ID_TOPIC + "/error";
 
     /**
      * Response for all client

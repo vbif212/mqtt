@@ -23,8 +23,9 @@ public class UserService {
         }
         User user = userRepository.findByLogin(login);
         if (user != null && user.isOnline()) {
-            throw new IllegalStateException();
-        } else {
+            throw new UnsupportedOperationException(String.format("User %s already exist!", login));
+        }
+        if (user == null) {
             user = new User(login);
         }
         user.setOnline(true);
@@ -34,16 +35,12 @@ public class UserService {
     public void offlineUserByLogin(String login) {
         User user = userRepository.findByLogin(login);
         if (user == null) {
-            throw new IllegalArgumentException();
+            throw new UnsupportedOperationException(String.format("User %s not found!", login));
         }
         if (!user.isOnline()) {
-            throw new IllegalStateException();
+            throw new UnsupportedOperationException(String.format("User %s already offline!", login));
         }
         user.setOnline(false);
         userRepository.save(user);
-    }
-
-    public List<User> getAllUsers() {
-        return userRepository.findAll();
     }
 }

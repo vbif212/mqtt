@@ -3,6 +3,7 @@ package com.axmor.mqtt.server.configs;
 import com.axmor.mqtt.server.messageHandler.MessageHandlerImpl;
 import com.axmor.mqtt.server.topics.ClientTopics;
 import com.axmor.mqtt.server.topics.ServerTopics;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.eclipse.paho.client.mqttv3.MqttConnectOptions;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
@@ -102,5 +103,10 @@ public class ServerConfiguration {
                 new MqttPahoMessageHandler(CLIENT_ID, mqttPahoClientFactory());
         messageHandler.setAsync(true);
         return messageHandler;
+    }
+
+    @Bean
+    public ObjectMapper objectMapper() {
+        return new ObjectMapper();
     }
 }

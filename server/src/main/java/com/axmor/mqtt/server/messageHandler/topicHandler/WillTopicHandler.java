@@ -13,8 +13,9 @@ import java.util.Collections;
 import java.util.Map;
 
 @Component
-public class JoinTopicHandler extends AbstractTopicHandler {
-    private final String USER_JOIN_ALL = "%s joined to chat!";
+public class WillTopicHandler extends AbstractTopicHandler {
+
+    private final String WILL_MESSAGE = "%s said '%s' and disconnected!";
 
     @Autowired
     UserService userService;
@@ -22,19 +23,19 @@ public class JoinTopicHandler extends AbstractTopicHandler {
     @Autowired
     MessageGateway messageGateway;
 
-    protected JoinTopicHandler() {
-        super(ClientTopics.CLIENT_JOIN_TOPIC);
+    protected WillTopicHandler() {
+        super(ClientTopics.CLIENT_WILL_TOPIC);
     }
 
     @Override
     protected void innerHandle(String receivedTopic, String payload) {
-        String userLogin = TopicUtils.getUserFromReceivedTopic(receivedTopic);
-        userService.joinUserByLogin(userLogin);
-        Map<String, Object> joinAllHeader = Collections.singletonMap(
-                MqttHeaders.TOPIC,
-                ServerTopics.SERVER_ALL_MESSAGE_TOPIC
-        );
-        messageGateway.send(String.format(USER_JOIN_ALL, userLogin), joinAllHeader);
-        log.info(userLogin + " join to chat.");
+        try {
+            String userLogin = TopicUtils.getUserFromReceivedTopic(receivedTopic);
+            userService.offlineUserByLogin(userLogin);
+            Map<String, Object> header = Collections.singletonMap(MqttHeaders.TOPIC, ServerTopics.SERVER_ALL_MESSAGE_TOPIC);
+            messageGateway.send(String.format(WILL_MESSAGE, userLogin, payload), header);
+        } catch (Exception ignored) {
+
+        }
     }
 }

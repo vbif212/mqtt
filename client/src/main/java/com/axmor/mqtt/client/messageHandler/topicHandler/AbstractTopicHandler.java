@@ -1,15 +1,10 @@
-package com.axmor.mqtt.server.messageHandler.topicHandler;
+package com.axmor.mqtt.client.messageHandler.topicHandler;
 
-import com.axmor.mqtt.server.messageHandler.MessageHandlerImpl;
-import com.axmor.mqtt.server.util.TopicUtils;
+import com.axmor.mqtt.client.util.TopicUtils;
 import org.eclipse.paho.client.mqttv3.MqttTopic;
 import org.springframework.messaging.Message;
 
-import java.util.logging.Logger;
-
 public abstract class AbstractTopicHandler implements TopicHandler {
-
-    protected static final Logger log = Logger.getLogger(AbstractTopicHandler.class.getName());
 
     private final String TOPIC;
 
@@ -27,5 +22,7 @@ public abstract class AbstractTopicHandler implements TopicHandler {
         innerHandle(TopicUtils.getReceivedTopic(message), message.getPayload().toString());
     }
 
-    protected abstract void innerHandle(String receivedTopic, String payload);
+    protected void innerHandle(String receivedTopic, String payload) {
+        System.out.println(payload);
+    }
 }

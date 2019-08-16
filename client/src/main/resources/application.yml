@@ -1,0 +1,10 @@
+mqtt:
+  clientId: @username@
+  serverUris: @uri@
+  willMessageText: @will@
+  willMessageQos: 2
+  inboundMessageQos: 1
+  completionTimeout: 5000
+
+server:
+  port: @port@

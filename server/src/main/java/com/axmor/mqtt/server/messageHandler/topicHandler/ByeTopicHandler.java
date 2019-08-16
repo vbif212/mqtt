@@ -13,8 +13,9 @@ import java.util.Collections;
 import java.util.Map;
 
 @Component
-public class JoinTopicHandler extends AbstractTopicHandler {
-    private final String USER_JOIN_ALL = "%s joined to chat!";
+public class ByeTopicHandler extends AbstractTopicHandler {
+
+    private final String BYE_MESSAGE = "%s said 'Bye' and left the chat!";
 
     @Autowired
     UserService userService;
@@ -22,19 +23,16 @@ public class JoinTopicHandler extends AbstractTopicHandler {
     @Autowired
     MessageGateway messageGateway;
 
-    protected JoinTopicHandler() {
-        super(ClientTopics.CLIENT_JOIN_TOPIC);
+    protected ByeTopicHandler() {
+        super(ClientTopics.CLIENT_BYE_TOPIC);
     }
 
     @Override
     protected void innerHandle(String receivedTopic, String payload) {
         String userLogin = TopicUtils.getUserFromReceivedTopic(receivedTopic);
-        userService.joinUserByLogin(userLogin);
-        Map<String, Object> joinAllHeader = Collections.singletonMap(
-                MqttHeaders.TOPIC,
-                ServerTopics.SERVER_ALL_MESSAGE_TOPIC
-        );
-        messageGateway.send(String.format(USER_JOIN_ALL, userLogin), joinAllHeader);
-        log.info(userLogin + " join to chat.");
+        userService.offlineUserByLogin(userLogin);
+        Map<String, Object> header = Collections.singletonMap(MqttHeaders.TOPIC, ServerTopics.SERVER_ALL_MESSAGE_TOPIC);
+        messageGateway.send(String.format(BYE_MESSAGE, userLogin), header);
+        log.info(userLogin + " send command 'bye'.");
     }
 }

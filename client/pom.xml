@@ -22,6 +22,8 @@
             <properties>
                 <username>user</username>
                 <port>8081</port>
+                <will>Goodbye!</will>
+                <uri>tcp://localhost:1883</uri>
             </properties>
         </profile>
     </profiles>
@@ -48,10 +50,15 @@
             <artifactId>spring-integration-mqtt</artifactId>
         </dependency>
 
-        <!-- https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-json -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-json</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-configuration-processor</artifactId>
+            <optional>true</optional>
         </dependency>
 
     </dependencies>
